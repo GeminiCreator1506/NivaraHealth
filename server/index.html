@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VitalGaze</title>
+</head>
+<body>
+
+<h1>VitalGaze AI Health Screening</h1>
+
+<input id="name" placeholder="Patient Name"><br>
+<input id="dob" type="date"><br><br>
+
+<label>Tongue Image</label>
+<input type="file" id="tongue" accept="image/*"><br>
+
+<label>Eye Image</label>
+<input type="file" id="eye" accept="image/*"><br><br>
+
+<button onclick="analyze()">Analyze</button>
+
+<pre id="result"></pre>
+
+<script src="app.js"></script>
+</body>
+</html>
+
