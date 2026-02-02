@@ -56,7 +56,7 @@ form.append("dob", dob);
     form.append("eye", eyeImage);
 
     const res = await fetch(
-  "https://vitalgaze-server.onrender.com/analyze",
+  "https://vitalgaze-server-1.onrender.com/analyze",
   {
     method: "POST",
     body: form
@@ -85,9 +85,9 @@ form.append("dob", dob);
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-950/95 backdrop-blur-lg border-b border-gray-800' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
-              <Eye className="w-6 h-6 text-gray-950" />
-            </div>
+            <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
+  <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
+</div>
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
               NIVARA AI
             </span>
@@ -138,16 +138,17 @@ form.append("dob", dob);
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            AI that sees what
+            HEALING THROUGH 
             <br />
             <span className="bg-gradient-to-r from-orange-400 via-orange-300 to-orange-400 bg-clip-text text-transparent">
-              symptoms don't say
+               INTELLIGENT INSIGHT
             </span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
-            Powered by advanced AI, Nivara analyzes visual health indicators from your eyes, tongue, and skin to detect early disease signals before they become critical.
+            Driven by cutting-edge AI, Nivara decodes visual biomarkers from the eyes, tongue, and skin to detect early disease risks — transforming preventive care through intelligent, non-invasive analysis.
           </p>
+          <p>Nivara combines AI with healthcare insight to interpret the silent signals in the eyes, tongue, and skin, helping uncover early health risks so care can begin sooner, not later.</>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#vitalgaze" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-bold text-lg hover:shadow-2xl hover:shadow-orange-500/50 transition-all transform hover:scale-105">Try VitalGaze Now <ChevronRight className="ml-2" />
@@ -316,17 +317,17 @@ form.append("dob", dob);
               {
                 icon: Zap,
                 title: "Early Detection Saves Lives",
-                desc: "Identify health risks years before traditional diagnosis, enabling preventive action"
+                desc: "Where AI Meets Preventive Healthcare"
               },
               {
                 icon: Eye,
                 title: "Non-Invasive & Accessible",
-                desc: "No needles, labs, or complex procedures. Just your smartphone camera"
+                desc: "Because Early Detection Changes Everything"
               },
               {
                 icon: Brain,
                 title: "Built for Scale & Impact",
-                desc: "Cloud-native architecture designed to reach millions globally"
+                desc: "Redefining Preventive Healthcare"
               }
             ].map((item, i) => (
               <div key={i} className="text-center p-8 rounded-2xl bg-gray-900/50 backdrop-blur-sm border border-gray-800 hover:border-orange-400/50 transition-all">
@@ -505,7 +506,7 @@ form.append("dob", dob);
       </p>
     )}
 
-    {/* Results */}
+    {/* Results - UPDATED FOR NEW BACKEND RESPONSE */}
     {analysisResult && (
       <div className="mt-12 text-left bg-gray-900/60 border border-gray-800 rounded-2xl p-8">
         <h3 className="text-2xl font-bold mb-6">
@@ -513,27 +514,39 @@ form.append("dob", dob);
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {/* Tongue Features - NEW FORMAT */}
           <div>
-            <h4 className="font-semibold text-orange-400">Tongue Analysis</h4>
-            <p className="text-gray-300">
-              {analysisResult.tongue.condition}
-            </p>
-            <p className="text-sm text-gray-500">
-              Confidence: {(analysisResult.tongue.confidence * 100).toFixed(1)}%
-            </p>
+            <h4 className="font-semibold text-orange-400 mb-3">
+              Tongue Features
+            </h4>
+
+            {analysisResult.tongue_features && Object.entries(analysisResult.tongue_features).map(
+              ([key, val]) => (
+                <p key={key} className="text-gray-300 text-sm mb-1">
+                  <span className="capitalize">{key}</span>:{" "}
+                  <span className="font-medium">{val.value || "unknown"}</span>{" "}
+                  {val.confidence > 0 && (
+                    <span className="text-gray-500">
+                      ({(val.confidence * 100).toFixed(1)}%)
+                    </span>
+                  )}
+                </p>
+              )
+            )}
           </div>
 
+          {/* Eye Observation - NEW FORMAT */}
           <div>
-            <h4 className="font-semibold text-orange-400">Eye Analysis</h4>
+            <h4 className="font-semibold text-orange-400 mb-3">
+              Eye Observation
+            </h4>
             <p className="text-gray-300">
-              {analysisResult.eye.result}
-            </p>
-            <p className="text-sm text-gray-500">
-              Confidence: {(analysisResult.eye.confidence * 100).toFixed(1)}%
+              {analysisResult.eye || "No observation available"}
             </p>
           </div>
         </div>
 
+        {/* AI Health Summary - UNCHANGED */}
         <div>
           <h4 className="font-semibold text-orange-400 mb-2">
             AI Health Summary
@@ -554,9 +567,9 @@ form.append("dob", dob);
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-400 flex items-center justify-center">
-                <Eye className="w-5 h-5 text-gray-950" />
-              </div>
+              <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
+  <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
+</div>
               <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
                 NIVARA AI
               </span>
@@ -567,9 +580,8 @@ form.append("dob", dob);
             </div>
 
             <div className="flex gap-6">
-              <a href="#" className="text-gray-500 hover:text-orange-400 transition-colors">Twitter</a>
-              <a href="#" className="text-gray-500 hover:text-orange-400 transition-colors">LinkedIn</a>
-              <a href="#" className="text-gray-500 hover:text-orange-400 transition-colors">GitHub</a>
+              <a href="https://www.instagram.com/nivarahealth/" className="text-gray-500 hover:text-orange-400 transition-colors">Instagram</a>
+              <a href="mailto:sashreeksatapathydpsnt15@gmail.com" className="text-gray-500 hover:text-orange-400 transition-colors">Gmail</a>
             </div>
           </div>
         </div>
