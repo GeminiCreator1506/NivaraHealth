@@ -148,7 +148,7 @@ form.append("dob", dob);
           <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
             Driven by cutting-edge AI, Nivara decodes visual biomarkers from the eyes, tongue, and skin to detect early disease risks — transforming preventive care through intelligent, non-invasive analysis.
           </p>
-          <p>Nivara combines AI with healthcare insight to interpret the silent signals in the eyes, tongue, and skin, helping uncover early health risks so care can begin sooner, not later.</>
+          <p>Nivara combines AI with healthcare insight to interpret the silent signals in the eyes, tongue, and skin, helping uncover early health risks so care can begin sooner, not later.</p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#vitalgaze" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-bold text-lg hover:shadow-2xl hover:shadow-orange-500/50 transition-all transform hover:scale-105">Try VitalGaze Now <ChevronRight className="ml-2" />
