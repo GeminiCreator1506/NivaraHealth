@@ -173,7 +173,7 @@ form.append("dob", dob);
               <div className="text-gray-400 text-sm mt-2">Detection Accuracy</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">&lt;2s</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">&lt;2m</div>
               <div className="text-gray-400 text-sm mt-2">Analysis Time</div>
             </div>
             <div className="text-center">
