@@ -14,6 +14,7 @@ const NivaraWebsite = () => {
   const [error, setError] = useState("");
   const [patientName, setPatientName] = useState("");
   const [dob, setDob] = useState("");
+  const [pilotSubmitted, setPilotSubmitted] = useState(false);
 
 
 
@@ -26,10 +27,17 @@ const NivaraWebsite = () => {
 
   const handleSubmit = () => {
     if (email && email.includes('@')) {
-      alert(`Thank you for your interest! We'll contact ${email} soon.`);
-      setEmail('');
+      setPilotSubmitted(true);
+      // You can add actual backend submission here if needed
+      setTimeout(() => {
+        setEmail('');
+        setPilotSubmitted(false);
+      }, 5000);
+    } else {
+      alert('Please enter a valid email address');
     }
   };
+
   const analyzeWithVitalGaze = async () => {
   if (!tongueImage || !eyeImage) {
     setError("Please upload both images.");
@@ -84,8 +92,8 @@ form.append("dob", dob);
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-950/95 backdrop-blur-lg border-b border-gray-800' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
+          <div className="flex items-center space-x-3">
+            <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
   <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
 </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
@@ -98,9 +106,9 @@ form.append("dob", dob);
             <a href="#features" className="text-gray-300 hover:text-orange-400 transition-colors">Features</a>
             <a href="#why-nivara" className="text-gray-300 hover:text-orange-400 transition-colors">Why Us</a>
             <a href="#vision" className="text-gray-300 hover:text-orange-400 transition-colors">Vision</a>
-            <button className="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all">
+            <a href="#vitalgaze" className="px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all">
               Get Started
-            </button>
+            </a>
           </div>
 
           <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
@@ -116,9 +124,9 @@ form.append("dob", dob);
               <a href="#features" className="block text-gray-300 hover:text-orange-400">Features</a>
               <a href="#why-nivara" className="block text-gray-300 hover:text-orange-400">Why Us</a>
               <a href="#vision" className="block text-gray-300 hover:text-orange-400">Vision</a>
-              <button className="w-full px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-semibold">
+              <a href="#vitalgaze" className="block w-full px-6 py-2 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-semibold text-center">
                 Get Started
-              </button>
+              </a>
             </div>
           </div>
         )}
@@ -154,9 +162,9 @@ form.append("dob", dob);
             <a href="#vitalgaze" className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-bold text-lg hover:shadow-2xl hover:shadow-orange-500/50 transition-all transform hover:scale-105">Try VitalGaze Now <ChevronRight className="ml-2" />
             </a>
 
-            <button className="px-8 py-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-full text-white font-bold text-lg hover:border-orange-400 transition-all">
+            <a href="#how-it-works" className="px-8 py-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-full text-white font-bold text-lg hover:border-orange-400 transition-all">
               How It Works
-            </button>
+            </a>
           </div>
 
           <div className="mt-20 grid grid-cols-3 gap-8 max-w-3xl mx-auto">
@@ -380,20 +388,31 @@ form.append("dob", dob);
             Be among the first to experience AI-powered early disease detection. Sign up for our pilot program.
           </p>
 
-          <div className="max-w-md mx-auto flex gap-4">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="flex-1 px-6 py-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-orange-400 transition-all"
-            />
-            <button
-              onClick={handleSubmit}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-bold hover:shadow-xl hover:shadow-orange-500/50 transition-all whitespace-nowrap"
-            >
-              Get Early Access
-            </button>
+          <div className="max-w-md mx-auto">
+            {pilotSubmitted ? (
+              <div className="p-6 bg-green-500/10 border border-green-500/30 rounded-2xl">
+                <div className="flex items-center justify-center gap-3 text-green-400">
+                  <Check className="w-6 h-6" />
+                  <p className="font-semibold">Thank you! We'll contact you soon.</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-4">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="flex-1 px-6 py-4 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-orange-400 transition-all"
+                />
+                <button
+                  onClick={handleSubmit}
+                  className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full text-gray-950 font-bold hover:shadow-xl hover:shadow-orange-500/50 transition-all whitespace-nowrap"
+                >
+                  Get Early Access
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -567,8 +586,8 @@ form.append("dob", dob);
       <footer className="py-12 px-6 border-t border-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 rounded-lg overflow-hidden flex items-center justify-center">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
   <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
 </div>
               <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
