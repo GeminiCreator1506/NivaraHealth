@@ -520,19 +520,20 @@ form.append("dob", dob);
               Tongue Features
             </h4>
 
-            {analysisResult.tongue_features && Object.entries(analysisResult.tongue_features).map(
-              ([key, val]) => (
-                <p key={key} className="text-gray-300 text-sm mb-1">
-                  <span className="capitalize">{key}</span>:{" "}
-                  <span className="font-medium">{val.value || "unknown"}</span>{" "}
-                  {val.confidence > 0 && (
-                    <span className="text-gray-500">
-                      ({(val.confidence * 100).toFixed(1)}%)
-                    </span>
-                  )}
-                </p>
-              )
-            )}
+            {analysisResult.tongue_features && Object.entries(analysisResult.tongue_features)
+  .filter(([key, val]) => val !== null)  // Filter out null values
+  .map(([key, val]) => (
+    <p key={key} className="text-gray-300 text-sm mb-1">
+      <span className="capitalize">{key}</span>:{" "}
+      <span className="font-medium">{val.value || "unknown"}</span>{" "}
+      {val.confidence > 0 && (
+        <span className="text-gray-500">
+          ({(val.confidence * 100).toFixed(1)}%)
+        </span>
+      )}
+    </p>
+  ))
+}
           </div>
 
           {/* Eye Observation - NEW FORMAT */}
