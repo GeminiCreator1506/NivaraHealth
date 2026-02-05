@@ -92,9 +92,9 @@ form.append("dob", dob);
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-gray-950/95 backdrop-blur-lg border-b border-gray-800' : 'bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-  <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+  <img src="/logo.png" alt="Nivara Logo" className="w-full h-full object-contain" />
 </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
               NIVARA AI
@@ -173,7 +173,7 @@ form.append("dob", dob);
               <div className="text-gray-400 text-sm mt-2">Detection Accuracy</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">&lt;2m</div>
+              <div className="text-4xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">&lt;2s</div>
               <div className="text-gray-400 text-sm mt-2">Analysis Time</div>
             </div>
             <div className="text-center">
@@ -439,7 +439,7 @@ form.append("dob", dob);
       early-awareness tool — not a diagnosis.
     </p>
 
-    {/* Patient Info - MOVED TO TOP */}
+    {/* Patient Info */}
     <div className="grid md:grid-cols-2 gap-8 mb-10">
       <div className="p-6 rounded-2xl bg-gray-900/50 border border-gray-800">
         <h3 className="text-lg font-bold mb-4">Full Name</h3>
@@ -525,7 +525,7 @@ form.append("dob", dob);
       </p>
     )}
 
-    {/* Results - UPDATED FOR NEW BACKEND RESPONSE */}
+    {/* Results */}
     {analysisResult && (
       <div className="mt-12 text-left bg-gray-900/60 border border-gray-800 rounded-2xl p-8">
         <h3 className="text-2xl font-bold mb-6">
@@ -533,14 +533,14 @@ form.append("dob", dob);
         </h3>
 
         <div className="grid md:grid-cols-2 gap-6 mb-6">
-          {/* Tongue Features - NEW FORMAT */}
+          {/* Tongue Features */}
           <div>
             <h4 className="font-semibold text-orange-400 mb-3">
               Tongue Features
             </h4>
 
             {analysisResult.tongue_features && Object.entries(analysisResult.tongue_features)
-  .filter(([key, val]) => val !== null)  // Filter out null values
+  .filter(([key, val]) => val !== null)
   .map(([key, val]) => (
     <p key={key} className="text-gray-300 text-sm mb-1">
       <span className="capitalize">{key}</span>:{" "}
@@ -555,18 +555,33 @@ form.append("dob", dob);
 }
           </div>
 
-          {/* Eye Observation - NEW FORMAT */}
+          {/* Eye Observation - FIXED FOR NEW FORMAT */}
           <div>
             <h4 className="font-semibold text-orange-400 mb-3">
               Eye Observation
             </h4>
-            <p className="text-gray-300">
-              {analysisResult.eye || "No observation available"}
-            </p>
+            {typeof analysisResult.eye === 'object' ? (
+              // New format: { class: "VPE", confidence: 0.592 }
+              <div>
+                <p className="text-gray-300 mb-1">
+                  <span className="font-medium">{analysisResult.eye.class || "Undetermined"}</span>
+                </p>
+                {analysisResult.eye.confidence > 0 && (
+                  <p className="text-sm text-gray-500">
+                    Confidence: {(analysisResult.eye.confidence * 100).toFixed(1)}%
+                  </p>
+                )}
+              </div>
+            ) : (
+              // Old format: just a string
+              <p className="text-gray-300">
+                {analysisResult.eye || "No observation available"}
+              </p>
+            )}
           </div>
         </div>
 
-        {/* AI Health Summary - UNCHANGED */}
+        {/* AI Health Summary */}
         <div>
           <h4 className="font-semibold text-orange-400 mb-2">
             AI Health Summary
@@ -586,9 +601,9 @@ form.append("dob", dob);
       <footer className="py-12 px-6 border-t border-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-lg overflow-hidden flex items-center justify-center">
-  <img src="logo.png" alt="Nivara Logo" className="w-full h-full object-cover" />
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center">
+  <img src="/logo.png" alt="Nivara Logo" className="w-full h-full object-contain" />
 </div>
               <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-300 bg-clip-text text-transparent">
                 NIVARA AI
